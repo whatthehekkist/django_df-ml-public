@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block body %}
+<title>Movie & Customer Recommendations</title>
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/movies.css' %}">
+
+<!-- 메인 컨텐츠 (상위 평가 영화 및 고객 추천) -->
+<div class="content">
+
+    <!-- Section 1: Top Rated Movies -->
+    <div class="section">
+        <h1>Top Rated Movies</h1>
+        <div class="scroll-container">
+            <button class="scroll-button left" onclick="scrollLeft('movies')">&lt;</button>
+            <div class="movie-container" id="movie-list" onmousedown="startDrag(event, 'movie-list')">
+                <!-- AJAX로 로드할 영화 데이터 -->
+                {% include 'loading.html' %}
+            </div>
+            <button class="scroll-button right" onclick="scrollRight('movies')">&gt;</button>
+        </div>
+    </div>
+
+    <!-- Section 2: Customer Recommendations -->
+    <div class="section">
+        <h1>Customer Recommendations</h1>
+        <div class="scroll-container">
+            <button class="scroll-button left" onclick="scrollLeft('movies')">&lt;</button>
+            <div class="customer-container" id="customer-list" onmousedown="startDrag(event, 'customer-list')">
+                <!-- AJAX로 로드할 고객 데이터 -->
+                {% include 'loading.html' %}
+            </div>
+            <button class="scroll-button right" onclick="scrollRight('movies')">&gt;</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function loadMovies() {
+        $.ajax({
+            url: "{% url 'recommend:movies' %}", // Django 뷰로 AJAX 요청
+            method: "GET",
+            success: function(data) {
+                $('#movie-list').html(data.movies_html); // AJAX로 가져온 HTML을 삽입
+            },
+            error: function() {
+                $('#movie-list').html("<p>Error loading recommendations</p>");
+            }
+        });
+    }
+
+    function loadCustomers() {
+        $.ajax({
+            url: "{% url 'recommend:customers' %}", // Django 뷰로 AJAX 요청
+            method: "GET",
+            success: function(data) {
+                $('#customer-list').html(data.customers_html); // AJAX로 가져온 HTML을 삽입
+            },
+            error: function() {
+                $('#customer-list').html("<p>Error loading recommendations</p>");
+            }
+        });
+    }
+
+    // JavaScript for independent drag and scroll functionality
+    let isDragging = false;
+
+    function startDrag(e, listId) {
+        isDragging = true;
+        const list = document.getElementById(listId);
+        const startX = e.pageX - list.offsetLeft;
+        const initialScrollLeft = list.scrollLeft;
+
+        document.addEventListener('mousemove', function(event) {
+            drag(event, list, startX, initialScrollLeft);
+        });
+        document.addEventListener('mouseup', stopDrag);
+    }
+
+    function drag(e, list, startX, initialScrollLeft) {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - list.offsetLeft;
+        const walk = (x - startX) * 2; // Scroll-fast
+        list.scrollLeft = initialScrollLeft - walk;
+    }
+
+    function stopDrag() {
+        isDragging = false;
+        document.removeEventListener('mousemove', drag);
+    }
+
+    // Load movies and customers via AJAX
+    $(document).ready(function() {
+        loadMovies();
+        loadCustomers();
+    });
+
+    function scrollLeft(containerId) {
+        const container = document.getElementById(containerId);
+        container.scrollBy({
+            top: 0,
+            left: -200, // 스크롤할 거리
+            behavior: 'smooth'
+        });
+    }
+
+    function scrollRight(containerId) {
+        const container = document.getElementById(containerId);
+        container.scrollBy({
+            top: 0,
+            left: 200, // 스크롤할 거리
+            behavior: 'smooth'
+        });
+    }
+
+
+
+    // Event listeners for scroll buttons
+    document.getElementById('scroll-left-movies').addEventListener('click', scrollMoviesLeft);
+    document.getElementById('scroll-right-movies').addEventListener('click', scrollMoviesRight);
+    document.getElementById('scroll-left-customers').addEventListener('click', scrollCustomersLeft);
+    document.getElementById('scroll-right-customers').addEventListener('click', scrollCustomersRight);
+</script>
+
+{% endblock %}

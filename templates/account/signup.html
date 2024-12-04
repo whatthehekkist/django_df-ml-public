@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %}<title>whatthehekkist | Sign Up</title>{% endblock %}
+{% block body %}
+<div class="container">
+   <h1>SignUp</h1>
+   <form method="POST" enctype="multipart/form-data">
+       {% csrf_token %}
+       {% bootstrap_form form %}
+       <button class="btn btn btn-info" type="submit">Sign Up</button>
+   </form>
+   <p class="switch-auth">Already Registered? <a href="{% url 'account:login' %}">Log In</a></p>
+</div>
+{% endblock %}
+
+
+
+{% comment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>SignUp</title>
+   {% load static %}
+   <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+   <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+   <!-- Include the Navbar -->
+   {% include 'navbar.html' %}
+   <div class="container">
+       <h1>SignUp</h1>
+       <form method="POST" enctype="multipart/form-data">
+           {% csrf_token %}
+           {{ form.as_p }}
+           <button type="submit">회원가입</button>
+       </form>
+       <p class="switch-auth">이미 계정이 있으신가요? <a href="{% url 'account:login' %}">로그인</a></p>
+   </div>
+</body>
+</html>
+{% endcomment %}

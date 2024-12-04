@@ -1,0 +1,118 @@
+{% load bootstrap4 %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'js/slick/slick.css' %}">
+<link rel="stylesheet" href="{% static 'js/slick/slick-theme.css' %}">
+<script src="{% static 'js/slick/slick.js' %}"></script>
+<script src="{% static 'js/slick/slick.min.js' %}"></script>
+
+<style>
+.text-rainbow {
+  background-image: linear-gradient(90deg, red, orange, yellow, green, blue, navy, purple);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  <!--font-size: 40px;-->
+}
+</style>
+
+<div class="bottom-nav-wrapper"  title="{% if user.is_authenticated %}You can scroll/drag to left/right!{%endif%}">
+    {% if user.is_authenticated %}
+        {% if user.profile_image %}
+           <img src="{{ user.profile_image.url }}"
+                alt="{{ account.username }}'s profile image"
+                width="30" height="30"
+           >
+        {% else %}
+               <!-- 프로필 이미지가 없을 경우 기본 이미지 표시 -->
+               <img src="/static/images/default_profile.jpg"
+                    alt="Default profile image"
+                    width="30" height="30"
+               >
+        {% endif %}
+
+        <span class="text-rainbow">Hello, {{ user.username }}!</span>
+
+    {% endif %}
+
+    <div class="bottom-nav">
+        <a class="btn btn-dark m-2" href="{% url 'chart:index' %}">Chart Visualization</a>
+        <a class="btn btn-dark m-2" href="{% url 'recommend:index' %}">Movie Recommendation</a>
+        <a class="btn btn-dark m-2" href="{% url 'chatbot:index' %}">Chatbot</a>
+        <a class="btn btn-dark m-2" href="{% url 'employees:index' %}">Employees</a>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+
+    // 현재 URL 가져오기
+    const currentPath = "{{ request.path }}";
+
+    // 링크들을 배열로 정의
+    const links = [
+        { url: '{% url 'chart:index' %}', name: 'Chart Visualization' },
+        { url: '{% url "employees:index" %}', name: 'Employees' },
+        { url: '{% url "chatbot:index" %}', name: 'Chatbot' },
+        { url: '{% url "recommend:index" %}', name: 'Movie Recommendation' }
+    ];
+
+    const navContainer = document.querySelector('.bottom-nav');
+
+    // 화면 너비 체크 (여기서는 768px 이하를 모바일로 가정)
+    if (window.innerWidth <= 768) {
+        if (currentPath === "/") {
+            // 루트 페이지일 경우 링크를 랜덤으로 섞음
+            links.sort(() => Math.random() - 0.5); // 랜덤 섞기
+
+            // 링크 출력
+            navContainer.innerHTML = ''; // 기존 내용을 비우고 랜덤된 링크 추가
+            links.forEach(link => {
+                navContainer.innerHTML += `<a class="btn btn-dark m-2" href="${link.url}">${link.name}</a>`;
+            });
+        } else {
+            // 현재 페이지 링크를 제일 앞에 두고 나머지 링크 정렬
+            const currentLink = links.find(link => link.url === currentPath);
+            if (currentLink) {
+                links.sort((a, b) => (a.url === currentPath ? -1 : b.url === currentPath ? 1 : 0));
+            }
+
+            // 링크 출력
+            navContainer.innerHTML = ''; // 기존 내용을 비우고 새로운 링크 추가
+            links.forEach(link => {
+                navContainer.innerHTML += `<a class="btn btn-dark m-2" href="${link.url}">${link.name}</a>`;
+            });
+        }
+    } else {
+        // 데스크탑 화면일 경우 기존 내용 유지
+        links.forEach(link => {
+            navContainer.innerHTML += `<a class="btn btn-dark m-2" href="${link.url}">${link.name}</a>`;
+        });
+    }
+
+    $('.bottom-nav').slick({
+        infinite: false,
+        slidesToShow: 3, // 한번에 보여줄 버튼 수
+        slidesToScroll: 1, // 한번에 스크롤할 버튼 수
+        dots: false, // 스크롤 점 표시
+        arrows: true,
+        prevArrow: '<button type="button" class="slick-prev">◀</button>',
+        nextArrow: '<button type="button" class="slick-next">▶</button>',
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2, // 화면 크기가 작아질 때 보여줄 버튼 수
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1, // 모바일에서 버튼을 한 개만 표시
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+});
+</script>

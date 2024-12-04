@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block body %}
+<form method="post">
+    <div>
+        {% csrf_token %}
+        <!--{{ form.as_p }}-->
+        {% bootstrap_form form %}
+    </div>
+    <button class="btn btn btn-info" type="submit">Submit</button>
+    <a class="btn btn btn-outline-dark" href="{% url 'employees:index' %}">Cancel</a>
+</form>
+</div>
+{% endblock %}
+

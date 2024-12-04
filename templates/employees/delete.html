@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block body %}
+
+    <h1>Confirm Deletion</h1>
+    <p class="text-info">Are you sure you want to delete this?</p>
+    <form method="post">
+    <div>
+        {% csrf_token %}
+        <!--{{ form.as_p }}-->
+        {% bootstrap_form form %}
+    </div>
+    <button class="btn btn btn-danger" type="submit">Submit</button>
+    <a class="btn btn btn-outline-dark" href="{% url 'employees:index' %}">Cancel</a>
+</form>
+
+{% endblock %}
+

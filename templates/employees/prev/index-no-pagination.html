@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %}<title>whatthehekkist | Employees</title>{% endblock %}
+{% block body %}
+<div class="container" style="width: 600px; bottom: 20px;">
+    <div>
+        <h2>
+            <span class="flex-grow-1">Employee list</span>
+        </h2>
+        <button class="btn btn-primary mt-2 mb-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Add Employee
+        </button>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <button class="btn btn-info" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-responsive mt-5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td>{{ emp.id }}</td>
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.age }}</td>
+                <td>{{ emp.mobile }}</td>
+                <td>{{ emp.address }}</td>
+                <td>
+                    <a href="{% url 'employees:edit' emp.id %}" class="btn btn-info m-1">Edit</a>
+                    <a href="{% url 'employees:delete' emp.id %}" class="btn btn-danger m-1">Del</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,54 @@
+body {
+    background: rgb(240,240,240, 0.8);
+    /*background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(255,255,255,1) 100%);*/
+}
+
+.project-container {
+    height: 50vh;
+}
+.project-list a {
+    text-decoration: none;
+    color: #90a3ff;
+}
+.project-list ul {
+    list-style: none;
+}
+
+.bottom-nav-wrapper {
+    overflow: hidden; /* 스크롤바 숨김 */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f9fa !important;
+    opacity: 0.7;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 999;
+}
+
+.bottom-nav {
+    display: flex; /* 가로로 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.bottom-nav a {
+    flex: 0 0 auto; /* 각 버튼 크기 자동 조정 */
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.slick-prev, .slick-next {
+    font-size: 30px;
+    color: black !important;
+}
+
+.slick-prev:before, .slick-next:before {
+    font-size: 30px;
+    color: black !important;
+}
+

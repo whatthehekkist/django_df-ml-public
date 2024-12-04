@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+<!--{% load bootstrap4 %}-->
+{% block title %}<title>whatthehekkist | Employees</title>{% endblock %}
+{% block body %}
+<div class="emp-list-body container my-3" style="max-width: 800px;">
+    <div>
+        <div class="text-center">
+            <h2>
+                Employee List
+            </h2>
+            <button class="btn btn-primary m-2" type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample">
+                Add Employee
+            </button>
+        </div>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body mt-1">
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <button class="btn btn-info w-100" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-responsive mt-5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in page_obj %}
+            <tr>
+                <td>{{ emp.id }}</td>
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.age }}</td>
+                <td>{{ emp.mobile }}</td>
+                <td>{{ emp.address }}</td>
+                <td>
+                    <a href="{% url 'employees:edit' emp.id %}" class="btn btn-info m-1">Edit</a>
+                    <a href="{% url 'employees:delete' emp.id %}" class="btn btn-danger m-1">Del</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link text-muted" href="?page=1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled mx-1">
+                <a class="page-link font-weight-bold" href="#">{{ page_obj.number }}</a>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link text-muted" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<style>
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        emp-list-body .btn {
+            font-size: 0.875rem;
+        }
+
+        table {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .container {
+            width: 100%;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+        }
+    }
+</style>
+{% endblock %}

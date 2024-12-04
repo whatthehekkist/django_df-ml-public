@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% block title %}<title>whatthehekkist | Chart Visualization</title>{% endblock %}
+{% block body %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<style>
+    .chart-container {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        margin-bottom: 50px;
+        padding: 5px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    .toggle-btn {
+        display:none;
+        margin: 10px 0;
+        padding: 10px;
+        cursor: pointer;
+        background-color: #9aa6b3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+    @media (max-width: 768px) {
+        .chart-container {
+            max-width: 100%;
+        }
+    }
+</style>
+
+<div class="text-center">
+    <h2 class="mb-5">Genre Distribution</h2>
+
+    <div class="chart-row">
+        <div class="chart-container">
+             {% include 'loading.html' %}
+            <div class="chart-label"><h5>Popular Genre Distribution</h5></div>
+            <button class="toggle-btn" onclick="toggleChart('genreChart', this)">Switch to Bar Chart</button>
+            <canvas id="genreChart">{% include 'loading.html' %}</canvas>
+        </div>
+        <div class="chart-container">
+            <div class="chart-label"><h5>Customer Genre Distribution</h5></div>
+            <button class="toggle-btn" onclick="toggleChart('custGenreChart', this)">Switch to Bar Chart</button>
+            <canvas id="custGenreChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-row">
+        <div class="chart-container">
+            <div class="chart-label"><h5>SVD Genre Distribution</h5></div>
+            <button class="toggle-btn" onclick="toggleChart('svdGenreChart', this)">Switch to Bar Chart</button>
+            <canvas id="svdGenreChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <div class="chart-label"><h5>NMF Genre Distribution</h5></div>
+            <button class="toggle-btn" onclick="toggleChart('nmfGenreChart', this)">Switch to Bar Chart</button>
+            <canvas id="nmfGenreChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <div class="chart-label"><h5>Matrix Factorization Genre Distribution</h5></div>
+            <button class="toggle-btn" onclick="toggleChart('mfGenreChart', this)">Switch to Bar Chart</button>
+            <canvas id="mfGenreChart"></canvas>
+        </div>
+    </div>
+
+    <div style="height: 10vh;"></div>
+</div>
+<script>
+
+    // FIXME: for bar chart, legend goes undefined.
+
+    const labels = ['Action', 'Comedy', 'Drama', 'Horror', 'Romance'];
+    let genreCharts = {};
+    let chartTypes = {
+        genreChart: 'pie',
+        custGenreChart: 'pie',
+        svdGenreChart: 'pie',
+        nmfGenreChart: 'pie',
+        mfGenreChart: 'pie'
+    };
+
+    async function fetchData(url) {
+        const response = await fetch(url);
+        return response.json();
+    }
+
+    function alignDataWithLabels(data) {
+        return labels.map(label => data[label] || 0);
+    }
+
+
+    function drawChart(chartId, genreData, type) {
+        const ctx = document.getElementById(chartId).getContext('2d');
+        const alignedData = alignDataWithLabels(genreData);
+
+        // 데이터가 비어있으면 경고 메시지를 띄움
+        if (alignedData.length === 0 || alignedData.every(num => num === 0)) {
+            console.warn('데이터가 없습니다.');  // 데이터가 없을 시 경고
+            return; // 함수 종료
+        }
+
+        if (genreCharts[chartId]) {
+            genreCharts[chartId].destroy(); // 기존 차트 삭제
+            console.log("prev chart destroyed");
+        }
+
+        console.log(type);
+        console.log(labels);
+        console.log(alignedData);
+
+        genreCharts[chartId] = new Chart(ctx, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: alignedData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                skipNull: true,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: type === 'bar' ? false : true, // 바 차트일 경우 레전드 숨김
+                        // display: true, // 레전드 표시
+                        // position: 'top', // 레전드 위치 설정
+                    },
+                    datalabels: {
+                        color: '#000',
+                        formatter: (value, context) => {
+                            if (value > 0) {
+                                return context.chart.data.labels[context.dataIndex];
+                            }
+                            return ''; // 0일 경우 빈 문자열 반환
+                        },
+                        font: {
+                            size: 14,
+                            weight: 'bold',
+                        },
+                        textAlign: 'center',
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+    }
+
+
+    function toggleChart(chartId, button) {
+        const urls = {
+            'genreChart': '{% url "chart:pop_chart" %}',
+            'custGenreChart': '{% url "chart:cust_chart" %}',
+            'svdGenreChart': '{% url "chart:svd_chart" %}',
+            'nmfGenreChart': '{% url "chart:nmf_chart" %}',
+            'mfGenreChart': '{% url "chart:mf_chart" %}'
+        };
+
+        fetchData(urls[chartId]).then(data => {
+            chartTypes[chartId] = chartTypes[chartId] === 'pie' ? 'bar' : 'pie'; // 차트 타입 토글
+            drawChart(chartId, data, chartTypes[chartId]);
+
+            // 버튼 텍스트 변경
+            button.textContent = chartTypes[chartId] === 'pie' ? 'Switch to Bar Chart' : 'Switch to Pie Chart';
+        }).catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }
+
+    // 페이지 로딩 시 각 차트 그리기
+    async function initCharts() {
+        const dataPromises = [
+            fetchData('{% url "chart:pop_chart" %}'),
+            fetchData('{% url "chart:cust_chart" %}'),
+            fetchData('{% url "chart:svd_chart" %}'),
+            fetchData('{% url "chart:nmf_chart" %}'),
+            fetchData('{% url "chart:mf_chart" %}')
+        ];
+
+        const [popData, custData, svdData, nmfData, mfData] = await Promise.all(dataPromises);
+        const type = 'pie';
+        drawChart('genreChart', popData, type);
+        drawChart('custGenreChart', custData, type);
+        drawChart('svdGenreChart', svdData, type);
+        drawChart('nmfGenreChart', nmfData, type);
+        drawChart('mfGenreChart', mfData, type);
+
+        $('.toggle-btn').show();
+        $('.loader-wrapper').hide();
+    }
+
+    document.addEventListener('DOMContentLoaded', initCharts);
+
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% load bootstrap4 %}
+{% block body %}
+{% for movie in movies %}
+
+    <div class="movie-item container p-3" style="cursor: pointer;">
+        <h3>{{movie.title}}</h3>
+        <p>Genre: {{movie.genre}}</p>
+        {% load static %}
+        <img src="{% static 'images/placeholder.jpg' %}" style="width: 150px; margin: 0 auto;" alt="placeholder image" />
+         {% comment %}<img src="{{ movie.movie_image.url }}" alt="{{ movie.title }}" />{% endcomment %}
+    </div>
+
+
+{% endfor %}
+
+
+{% endblock %}
+
+
+

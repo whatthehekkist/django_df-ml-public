@@ -1,0 +1,17 @@
+{% load bootstrap4 %}
+{% block body %}
+{% for customer in customers %}
+    <div class="customer-item container p-3" style="cursor: pointer;">
+        <h3>{{customer.title}}</h3>
+        <p>Genre: {{customer.genre}}</p>
+        {% load static %}
+        <img src="{% static 'images/placeholder.jpg' %}" style="width: 150px; margin: 0 auto;" alt="placeholder image" />
+        {% comment %}<img src="{{ customer.movie_image.url }}" alt="{{ customer.title }}" />{% endcomment %}
+    </div>
+{% endfor %}
+
+
+{% endblock %}
+
+
+

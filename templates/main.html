@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="project-container container text-center">
+        <h2>Welcome</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+        {% if user.is_authenticated %}
+            <div class="project-list mt-5">
+                <div class="col justify-content-center">
+                    <div class="row-auto m-3">
+                        <div class="btn btn-light">
+                            <a href="{% url 'employees:index' %}"><h5>Employee List</h5></a>
+                        </div>
+                    </div>
+                    <div class="row-auto m-3">
+                        <div class="btn btn-light">
+                            <a href="{% url 'chatbot:index' %}"><h5>Chatbot (Korean Only)</h5></a>
+                        </div>
+                    </div>
+                    <div class="row-auto m-3">
+                        <div class="btn btn-light">
+                            <a href="{% url 'recommend:index' %}"><h5>Movie Recommendation</h5></a>
+                        </div>
+                    </div>
+                    <div class="row-auto m-3">
+                        <div class="btn btn-light">
+                            <a href="{% url 'chart:index' %}"><h5>Chart Visualization</h5></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %}
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <div class="container">
+      <h1>Welcome to Our Website</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor....</p>
+
+      {% if user.is_authenticated %}
+          <div>
+               <a href="{% url 'employees:emp' %}"><h2>Employee List</h2></a>
+          </div>
+           <div>
+                <a href="{% url 'chatbot:index' %}"><h2>Chatbot</h2></a>
+           </div>
+
+            <div>
+                <a href="{% url 'recommend:index' %}"><h2>Movie Recommendation</h2></a>
+            </div>
+
+      {% endif %}
+
+    </div>
+
+{% endblock %}
+{% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Page</title>
+  {% load static %}
+   <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+   <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+   <!-- Include the Navbar -->
+  {% include 'navbar.html' %}
+
+  <!-- Main Content -->
+  <div class="container">
+      <h1>Welcome to Our Website</h1>
+      <p>This is the main page of our website.</p>
+
+      {% if user.is_authenticated %}
+        <h1><a href="{% url 'testing:emp' %}">Employee List</a></h1>
+      {% endif %}
+
+      <!-- Link to Post List Page -->
+<!--      <a href="{% url 'account:posts' %}" class="btn">Go to Post List Page</a>-->
+  </div>
+</body>
+</html>
+{% endcomment %}
