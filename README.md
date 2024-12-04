@@ -1,5 +1,5 @@
 # How to run in localhost
-
+- git clone `https://github.com/whatthehekkist/django_df-ml-public.git`
 
 
 
@@ -9,11 +9,12 @@
   - [success] your terminal will look like `(.venv) C:\Users\<USER_NAME>\<PATH>\django_df-ml-public>`
   - [if fail] in powershell, `.venv\Scripts\activate`
 - installation
-```python
-pip install django~=4.0 django-bootstrap4 bootstrap4 pillow psycopg2 psycopg2-binary postgre binary sqlalchemy pandas
-```
+  ```python
+  pip install django~=4.0 django-bootstrap4 bootstrap4 pillow psycopg2 psycopg2-binary postgre binary sqlalchemy pandas
+  ```
 # postgres data sourcing
-unzip `postgres-dump.zip` and in pgadmin4: 
+unzip [postgres-dump.zip](https://drive.google.com/file/d/1l3ngJ7TeubYSmN4B3iyhOWv0Ke8omBT8/view?usp=sharing) 
+and in pgadmin4: 
 - create each table using `.sql` file
 - import `.csv` accordingly
 
