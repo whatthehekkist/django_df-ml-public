@@ -2,15 +2,15 @@
 - data framing and movie recommendation (svd, nmf, mf) tutorial using batch movie data
 - click the following images to see video
 
-[![login/signup](https://github.com/user-attachments/assets/3be7a872-aeed-41e5-b5a9-c7837a27fa23)](https://www.youtube.com/watch?v=BaqTMrfTRPE)
+[![login/signup](https://github.com/user-attachments/assets/3be7a872-aeed-41e5-b5a9-c7837a27fa23)](https://www.youtube.com/watch?v=BaqTMrfTRPE){:target="_blank"}
 
-[![employees crud](https://github.com/user-attachments/assets/a34c0c14-6934-4abb-8077-5448989aacba)](https://www.youtube.com/shorts/F4vZxrI2nDc)
+[![employees crud](https://github.com/user-attachments/assets/a34c0c14-6934-4abb-8077-5448989aacba)](https://www.youtube.com/shorts/F4vZxrI2nDc){:target="_blank"}
 
-[![chatbot](https://github.com/user-attachments/assets/e7394266-5831-4ee7-8e73-b6d350114e33)](https://www.youtube.com/shorts/1PPDPNJcwkg)
+[![chatbot](https://github.com/user-attachments/assets/e7394266-5831-4ee7-8e73-b6d350114e33)](https://www.youtube.com/shorts/1PPDPNJcwkg){:target="_blank"}
 
-[![recommendation](https://github.com/user-attachments/assets/3b97c2ce-ed5c-4e66-b0f9-e518b28ee4ec)](https://www.youtube.com/shorts/JN8ZsU7MMTA)
+[![recommendation](https://github.com/user-attachments/assets/3b97c2ce-ed5c-4e66-b0f9-e518b28ee4ec)](https://www.youtube.com/shorts/JN8ZsU7MMTA){:target="_blank"}
 
-[![chart visualization](https://github.com/user-attachments/assets/26efa633-93fd-4856-8fcf-1a9818b9b60d)](https://www.youtube.com/shorts/lZxrXENAO7c)
+[![chart visualization](https://github.com/user-attachments/assets/26efa633-93fd-4856-8fcf-1a9818b9b60d)](https://www.youtube.com/shorts/lZxrXENAO7c){:target="_blank"}
 
 [//]: # ([![chart visualization]&#40;https://github.com/user-attachments/assets/ba4ea1da-fa07-4693-a404-6ebf6287fbcc&#41;]&#40;https://www.youtube.com/shorts/lZxrXENAO7c&#41;)
 
