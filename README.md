@@ -1,22 +1,40 @@
 # django_df-ml-public
 - data framing and movie recommendation (svd, nmf, mf) tutorial using batch movie data
-  <details>
-    <summary>login/signup mgmt</summary>
-    <div style="padding: 15px;">
-      <iframe 
-        width="661" 
-        height="1175" 
-        src="https://www.youtube.com/embed/BaqTMrfTRPE" 
-        title="login signup" 
-        frameborder="0" 
-        allow="accelerometer; autoplay;" 
-        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-      </iframe>
-    </div>
-  </details>
+- <video width="661" height="1175" controls>
+    <source src="https://www.youtube.com/watch?v=BaqTMrfTRPE" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
   - chatbot
   - recommendation
   - chart visualization
+
+[//]: # (<details>)
+
+[//]: # (    <summary>login/signup mgmt</summary>)
+
+[//]: # (    <div style="padding: 15px;">)
+
+[//]: # (      <iframe )
+
+[//]: # (        width="661" )
+
+[//]: # (        height="1175" )
+
+[//]: # (        src="https://www.youtube.com/embed/BaqTMrfTRPE" )
+
+[//]: # (        title="login signup" )
+
+[//]: # (        frameborder="0" )
+
+[//]: # (        allow="accelerometer; autoplay;" )
+
+[//]: # (        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>)
+
+[//]: # (      </iframe>)
+
+[//]: # (    </div>)
+
+[//]: # (  </details>)
 
 # env
 - pycharm community
