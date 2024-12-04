@@ -19,8 +19,8 @@
 # env
 - Python 3.12.3
 - django~=4.0
-- postgres 
-- pgadmin4
+- postgres 17
+- pgadmin 4
 - pycharm community
 
 # How to run in localhost
