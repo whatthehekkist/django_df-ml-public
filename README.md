@@ -2,7 +2,11 @@
 - data framing and movie recommendation (svd, nmf, mf) tutorial using batch movie data
 - click the following images to see video
 
-[![login/signup](https://github.com/user-attachments/assets/3be7a872-aeed-41e5-b5a9-c7837a27fa23)](https://www.youtube.com/watch?v=BaqTMrfTRPE){:target="_blank"}
+[//]: # ([![login/signup]&#40;https://github.com/user-attachments/assets/3be7a872-aeed-41e5-b5a9-c7837a27fa23&#41;]&#40;https://www.youtube.com/watch?v=BaqTMrfTRPE&#41;{:target="_blank"})
+<a href="https://www.youtube.com/watch?v=BaqTMrfTRPE" target="_blank">
+    <img src="https://github.com/user-attachments/assets/3be7a872-aeed-41e5-b5a9-c7837a27fa23" 
+    alt="login/signup">
+</a>
 
 [![employees crud](https://github.com/user-attachments/assets/a34c0c14-6934-4abb-8077-5448989aacba)](https://www.youtube.com/shorts/F4vZxrI2nDc){:target="_blank"}
 
