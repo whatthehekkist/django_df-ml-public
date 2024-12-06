@@ -19,9 +19,11 @@ def movies_view(request):
 
     # extract 20 movie_id from pop_movies
     pop_movies_ids = pop_movies.sort_values('mean').iloc[:20, 1].to_list()
+    print("pop_movies_ids ----\n", pop_movies_ids)
 
     # set sort base by mapping a specific order (pos) to each movie ID
     preserved_order = Case(*[When(movie_id=movie_id, then=pos) for pos, movie_id in enumerate(pop_movies_ids)])
+    print("preserved_order ----\n", preserved_order)
 
     # ORM query that filters movies with movie IDs included in the pop_movies_ids
     # sort the result in the order defined by preserved_order then

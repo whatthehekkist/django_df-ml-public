@@ -5,7 +5,7 @@ from .models import Employee
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ['name', 'age', 'mobile', 'address']
+        fields = '__all__'  # ['name', 'age', 'mobile', 'address']
         widgets = {
             'name': forms.TextInput(attrs={'readonly': 'readonly'}),
         }
@@ -14,7 +14,7 @@ class UpdateForm(forms.ModelForm):
 class DeleteForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ['name', 'age', 'mobile', 'address']
+        fields = '__all__'  # ['name', 'age', 'mobile', 'address']
         widgets = {
             'name': forms.TextInput(attrs={'readonly': 'readonly'}),
             'age': forms.TextInput(attrs={'readonly': 'readonly'}),
@@ -26,4 +26,4 @@ class DeleteForm(forms.ModelForm):
 class InsertForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ['name', 'age', 'mobile', 'address']
+        fields = '__all__'  # ['name', 'age', 'mobile', 'address']
