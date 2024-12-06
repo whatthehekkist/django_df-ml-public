@@ -5,6 +5,7 @@
     - <a href="https://dev-whatthehekkist.netlify.app/python/crud-employees/" target="_blank">employees (crud)</a>
     - <a href="https://dev-whatthehekkist.netlify.app/python/chatbot/" target="_blank">chatbot</a>
     - <a href="https://dev-whatthehekkist.netlify.app/python/movie-recommendations/" target="_blank">movie recommendation</a>
+    - <a href="https://dev-whatthehekkist.netlify.app/python/chart-visualization/" target="_blank">chart  visualization</a>
 - or `ctrl + click` the following images to see video
 
   [![login/signup](https://github.com/user-attachments/assets/3be7a872-aeed-41e5-b5a9-c7837a27fa23)](https://www.youtube.com/watch?v=BaqTMrfTRPE)
@@ -32,7 +33,7 @@
 - git clone `https://github.com/whatthehekkist/django_df-ml-public.git`
 
 ## venv
-- delete the hidden directory `.venv` 
+- [optional] delete the hidden directory `.venv` if it's cloned 
 - open the project in pycharm
 - `setting -> python interpreter -> add local interpreter`
   - [success] your terminal will look like `(.venv) C:\Users\<USER_NAME>\<PATH>\django_df-ml-public>`

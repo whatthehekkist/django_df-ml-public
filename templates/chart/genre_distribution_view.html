@@ -36,8 +36,8 @@
         <div class="chart-container">
              {% include 'loading.html' %}
             <div class="chart-label"><h5>Popular Genre Distribution</h5></div>
-            <button class="toggle-btn" onclick="toggleChart('genreChart', this)">Switch to Bar Chart</button>
-            <canvas id="genreChart">{% include 'loading.html' %}</canvas>
+            <button class="toggle-btn" onclick="toggleChart('popGenreChart', this)">Switch to Bar Chart</button>
+            <canvas id="popGenreChart">{% include 'loading.html' %}</canvas>
         </div>
         <div class="chart-container">
             <div class="chart-label"><h5>Customer Genre Distribution</h5></div>
@@ -71,44 +71,62 @@
     // FIXME: for bar chart, legend goes undefined.
 
     const labels = ['Action', 'Comedy', 'Drama', 'Horror', 'Romance'];
+
+    // chart data obj
     let genreCharts = {};
+
+    // chart type obj
     let chartTypes = {
-        genreChart: 'pie',
+        // defaults to pie initially
+        popGenreChart: 'pie',
         custGenreChart: 'pie',
         svdGenreChart: 'pie',
         nmfGenreChart: 'pie',
         mfGenreChart: 'pie'
     };
 
+    let cachedData = {}; // for data caching
+
+    // function for requesting to server
     async function fetchData(url) {
         const response = await fetch(url);
         return response.json();
     }
 
+    // function for chart label alignment
     function alignDataWithLabels(data) {
         return labels.map(label => data[label] || 0);
     }
 
-
+    /***
+    * function that prepares and draws chart
+    * @param chartId: one of popGenreChart, custGenreChart, svdGenreChart, nmfGenreChart, mfGenreChart
+    * @param genreData: data to draw
+    * @param type: pie or bar
+    */
     function drawChart(chartId, genreData, type) {
         const ctx = document.getElementById(chartId).getContext('2d');
         const alignedData = alignDataWithLabels(genreData);
 
-        // 데이터가 비어있으면 경고 메시지를 띄움
+        // check if data label exists
         if (alignedData.length === 0 || alignedData.every(num => num === 0)) {
-            console.warn('데이터가 없습니다.');  // 데이터가 없을 시 경고
-            return; // 함수 종료
+            console.warn('NO DATA LABEL FOUND.');
+            return; // force early return
         }
 
+        // chart data has been drawn at least once
         if (genreCharts[chartId]) {
-            genreCharts[chartId].destroy(); // 기존 차트 삭제
-            console.log("prev chart destroyed");
+
+            // console.log(chartId);
+            console.log(`prev ${chartId} destroyed and re-drawn it as ${type} chart successfully`);
+            genreCharts[chartId].destroy(); // destroy the existing chart of current data
         }
 
-        console.log(type);
+        // console.log(type);
         console.log(labels);
         console.log(alignedData);
 
+        // chart drawer
         genreCharts[chartId] = new Chart(ctx, {
             type: type,
             data: {
@@ -137,9 +155,9 @@
                 responsive: true,
                 plugins: {
                     legend: {
-                        display: type === 'bar' ? false : true, // 바 차트일 경우 레전드 숨김
-                        // display: true, // 레전드 표시
-                        // position: 'top', // 레전드 위치 설정
+                        display: type === 'bar' ? false : true, // hide legend if bar
+                        // display: true,
+                        // position: 'top',
                     },
                     datalabels: {
                         color: '#000',
@@ -147,7 +165,7 @@
                             if (value > 0) {
                                 return context.chart.data.labels[context.dataIndex];
                             }
-                            return ''; // 0일 경우 빈 문자열 반환
+                            return ''; // return '' if value is 0
                         },
                         font: {
                             size: 14,
@@ -161,29 +179,47 @@
         });
     }
 
-
+    // function that toggles chart type
     function toggleChart(chartId, button) {
-        const urls = {
-            'genreChart': '{% url "chart:pop_chart" %}',
-            'custGenreChart': '{% url "chart:cust_chart" %}',
-            'svdGenreChart': '{% url "chart:svd_chart" %}',
-            'nmfGenreChart': '{% url "chart:nmf_chart" %}',
-            'mfGenreChart': '{% url "chart:mf_chart" %}'
-        };
 
-        fetchData(urls[chartId]).then(data => {
-            chartTypes[chartId] = chartTypes[chartId] === 'pie' ? 'bar' : 'pie'; // 차트 타입 토글
-            drawChart(chartId, data, chartTypes[chartId]);
+        chartTypes[chartId] = chartTypes[chartId] === 'pie' ? 'bar' : 'pie';
 
-            // 버튼 텍스트 변경
+        // check if cached data exists
+        if (cachedData[chartId]) {
+            drawChart(chartId, cachedData[chartId], chartTypes[chartId]);
             button.textContent = chartTypes[chartId] === 'pie' ? 'Switch to Bar Chart' : 'Switch to Pie Chart';
-        }).catch(error => {
-            console.error('Error fetching data:', error);
-        });
+
+        } else { // cached data does not exist, request data to server
+
+            const urls = {
+                'popGenreChart': '{% url "chart:pop_chart" %}',
+                'custGenreChart': '{% url "chart:cust_chart" %}',
+                'svdGenreChart': '{% url "chart:svd_chart" %}',
+                'nmfGenreChart': '{% url "chart:nmf_chart" %}',
+                'mfGenreChart': '{% url "chart:mf_chart" %}'
+            };
+
+            // req data to server
+            fetchData(urls[chartId]).then(data => {
+                cachedData[chartId] = data; // store current data fetched to cachedData[chartId]
+                drawChart(chartId, data, chartTypes[chartId]);
+                button.textContent = chartTypes[chartId] === 'pie' ? 'Switch to Bar Chart' : 'Switch to Pie Chart';
+            }).catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        }
     }
 
-    // 페이지 로딩 시 각 차트 그리기
+    // function that initializes chart
     async function initCharts() {
+
+        // [NOT IN USE] this is ALT
+        {% if not user.is_authenticated %}
+            console.log("user authentication failed unexpectedly..redirect to /");
+            window.location.href = '/';
+        {% endif %}
+
+        // promise each data fetch
         const dataPromises = [
             fetchData('{% url "chart:pop_chart" %}'),
             fetchData('{% url "chart:cust_chart" %}'),
@@ -192,9 +228,20 @@
             fetchData('{% url "chart:mf_chart" %}')
         ];
 
+        // init each data (array destruction)
         const [popData, custData, svdData, nmfData, mfData] = await Promise.all(dataPromises);
-        const type = 'pie';
-        drawChart('genreChart', popData, type);
+
+        // cache each data
+        cachedData['popGenreChart'] = popData;
+        cachedData['custGenreChart'] = custData;
+        cachedData['svdGenreChart'] = svdData;
+        cachedData['nmfGenreChart'] = nmfData;
+        cachedData['mfGenreChart'] = mfData;
+
+        const type = 'pie'; // set chart type to pie by default
+
+        // draw chart using each data
+        drawChart('popGenreChart', popData, type);
         drawChart('custGenreChart', custData, type);
         drawChart('svdGenreChart', svdData, type);
         drawChart('nmfGenreChart', nmfData, type);
@@ -204,6 +251,7 @@
         $('.loader-wrapper').hide();
     }
 
+    // call initCharts on DOM load
     document.addEventListener('DOMContentLoaded', initCharts);
 
 </script>

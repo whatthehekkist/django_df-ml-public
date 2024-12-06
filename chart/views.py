@@ -14,21 +14,27 @@ def pop_chart_view(request):
 
     # extract 20 of movie_id from pop_movies
     pop_movies_ids = pop_movies.sort_values('mean').iloc[:20, 1].to_list()
+    # print("pop_movies_ids ----\n", pop_movies_ids)
 
     # Extract genre information of movies corresponding to popular movie IDs.
     # Results are saved in DataFrame format containing only genre.
     # (Extract a new DataFrame with only the genres of movies included in pop_movies_ids filtered.)
     filtered_movies = movies[movies['movie_id'].isin(pop_movies_ids)][['genre']]
+    # print("filtered_movies ----\n", filtered_movies)
 
     # collect string in the data frame above, split by ',' and make each string as a single row.
     all_genres = filtered_movies['genre'].apply(lambda x: x.split(',')).explode()
+    # print("all_genres ----\n", all_genres)
 
     # covert into list
     all_genres = all_genres.tolist()
 
     # trim all_genres and count genre
     cleaned_genres = [genre.strip() for genre in all_genres]
+    # print("cleaned_genres ----\n", cleaned_genres)
+
     genre_data = Counter(cleaned_genres)
+    # print("genre_data ----\n", genre_data)
 
     return JsonResponse(genre_data)
 
