@@ -1,11 +1,11 @@
 # django_df-ml-public
 - data framing and movie recommendation (svd, nmf, mf) tutorial using batch movie data
   - blog post
-    - <a href="https://dev-whatthehekkist.netlify.app/python/account-mgmt/" target="_blank">login/signup</a>
-    - <a href="https://dev-whatthehekkist.netlify.app/python/crud-employees/" target="_blank">employees (crud)</a>
-    - <a href="https://dev-whatthehekkist.netlify.app/python/chatbot/" target="_blank">chatbot</a>
-    - <a href="https://dev-whatthehekkist.netlify.app/python/movie-recommendations/" target="_blank">movie recommendation</a>
-    - <a href="https://dev-whatthehekkist.netlify.app/python/chart-visualization/" target="_blank">chart  visualization</a>
+    - <a href="https://dev-whatthehekkist.netlify.app/python/django-account-mgmt/" target="_blank">login/signup</a>
+    - <a href="https://dev-whatthehekkist.netlify.app/python/django-crud-employees/" target="_blank">employees (crud)</a>
+    - <a href="https://dev-whatthehekkist.netlify.app/python/django-chatbot/" target="_blank">chatbot</a>
+    - <a href="https://dev-whatthehekkist.netlify.app/python/django-movie-recommendations/" target="_blank">movie recommendation</a>
+    - <a href="https://dev-whatthehekkist.netlify.app/python/django-chart-visualization/" target="_blank">chart  visualization</a>
 - or `ctrl + click` the following images to see video
 
   [![login/signup](https://github.com/user-attachments/assets/3be7a872-aeed-41e5-b5a9-c7837a27fa23)](https://www.youtube.com/watch?v=BaqTMrfTRPE)
@@ -18,7 +18,9 @@
 
   [![chart visualization](https://github.com/user-attachments/assets/26efa633-93fd-4856-8fcf-1a9818b9b60d)](https://www.youtube.com/shorts/nhQ2EMBJtVI)
   
-[//]: # (  [![chart visualization]&#40;https://github.com/user-attachments/assets/26efa633-93fd-4856-8fcf-1a9818b9b60d&#41;]&#40;https://www.youtube.com/shorts/lZxrXENAO7c&#41;)
+
+
+  [//]: # (  [![chart visualization]&#40;https://github.com/user-attachments/assets/26efa633-93fd-4856-8fcf-1a9818b9b60d&#41;]&#40;https://www.youtube.com/shorts/lZxrXENAO7c&#41;)
   
   [//]: # ([![chatbot]&#40;https://github.com/user-attachments/assets/e7394266-5831-4ee7-8e73-b6d350114e33&#41;]&#40;https://www.youtube.com/shorts/1PPDPNJcwkg&#41;)
   
